@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PriceWatch · 价格行情监控</title>
+    <meta name="description" content="鞋类货号跨平台比价、利润核算与自动调价决策看板" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230a84ff'/%3E%3Cpath d='M7 21l6-7 4 4 8-9' stroke='white' stroke-width='2.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="./styles/app.css" />
+  </head>
+  <body>
+    <header class="header">
+      <div class="brand">
+        <span class="brand-glyph" aria-hidden="true">📈</span>
+        <div>
+          <div class="brand-name">PriceWatch</div>
+          <div class="brand-sub">跨平台行情监控 · 自动调价决策</div>
+        </div>
+      </div>
+
+      <div class="header-meta">
+        <span class="tag is-live" id="tag-status">数据已同步</span>
+        <span class="tag" id="tag-scope">监控 0 个货号</span>
+        <span class="tag" id="tag-updated">—</span>
+      </div>
+    </header>
+
+    <main class="shell">
+      <div class="hero animate">
+        <h1>价格行情看板</h1>
+        <p>
+          汇总 KREAM 与得物的实时报价，按平台费率与瑕疵损耗核算真实利润，
+          并结合竞品价格给出「上架 / 维持 / 调价 / 下架」的自动决策。
+        </p>
+      </div>
+
+      <div class="animate" style="margin-bottom: var(--s5)">
+        <div class="segmented" id="tabs" role="tablist" aria-label="视图切换">
+          <span class="pill" aria-hidden="true"></span>
+          <button role="tab" data-view="board" aria-selected="true">行情看板</button>
+          <button role="tab" data-view="alerts" aria-selected="false">价格预警</button>
+        </div>
+      </div>
+
+      <section id="view" aria-live="polite"></section>
+    </main>
+
+    <footer class="footer">
+      <span>PriceWatch · 演示数据由确定性算法生成，用于展示比价与决策逻辑</span>
+      <span id="footer-hint">点击货号查看利润拆解与调价建议</span>
+    </footer>
+
+    <script type="module">
+      import { boot } from './src/app.js';
+      boot().catch((error) => {
+        document.getElementById('view').innerHTML = `
+          <div class="empty"><strong>启动失败</strong><span>${String(error?.message ?? error)}</span></div>`;
+        console.error(error);
+      });
+    </script>
+  </body>
+</html>
